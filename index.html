@@ -3,185 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول - موقع نُور</title>
+    <title>موقع نُور - الرئيسية</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #2d5a27;
-            --gold: #d4af37;
-            --white: #ffffff;
-        }
+        :root { --primary: #2d5a27; --gold: #d4af37; --bg: #fdfbf7; }
+        body { margin: 0; font-family: 'Tajawal', sans-serif; background: var(--bg); }
+        .header { background: var(--primary); color: white; padding: 40px; text-align: center; border-radius: 0 0 40px 40px; }
+        .header h1 { font-family: 'Amiri', serif; margin: 0; }
+        
+        /* كود البث المباشر */
+        .live-box { max-width: 600px; margin: 20px auto; background: white; padding: 15px; border-radius: 20px; border: 2px solid var(--gold); text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .live-box i { color: red; animation: blink 1s infinite; margin-left: 10px; }
+        @keyframes blink { 50% { opacity: 0; } }
 
-        body {
-            margin: 0;
-            font-family: 'Tajawal', sans-serif;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* خلفية بتدرج لوني متحرك وهادئ */
-            background: linear-gradient(-45deg, #2d5a27, #1e3d1a, #4a7c44, #2d5a27);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            overflow: hidden;
-        }
+        .prayer-times { max-width: 800px; margin: 20px auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; padding: 10px; }
+        .time-card { background: white; padding: 15px; border-radius: 15px; width: 100px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid var(--gold); }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 50px 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 420px;
-            text-align: center;
-            animation: fadeIn 1.2s ease-out;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .icon-box {
-            width: 80px;
-            height: 80px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 40px;
-            box-shadow: 0 10px 20px rgba(45, 90, 39, 0.3);
-        }
-
-        h2 {
-            font-family: 'Amiri', serif;
-            color: var(--primary);
-            font-size: 32px;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .input-group i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 18px;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px 45px 14px 15px;
-            border-radius: 30px;
-            border: 1px solid #ddd;
-            outline: none;
-            font-family: 'Tajawal';
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: 0.3s;
-            background: #f9f9f9;
-        }
-
-        input:focus {
-            border-color: var(--gold);
-            background: #fff;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
-        }
-
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 30px;
-            background: var(--primary);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn-login:hover {
-            background: #1e3d1a;
-            transform: scale(1.03);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .footer-text {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .footer-text a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-        }
+        .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; max-width: 800px; margin: auto; }
+        .menu-item { background: white; padding: 30px; border-radius: 20px; text-align: center; text-decoration: none; color: var(--primary); font-weight: bold; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: var(--primary); color: white; transform: translateY(-5px); }
+        .menu-item i { font-size: 30px; display: block; margin-bottom: 10px; color: var(--gold); }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>نُور الهداية</h1>
+        <p>زاد المسلم اليومي</p>
+    </div>
 
-    <div class="login-card">
-        <div class="icon-box">
-            <i class="fa-solid fa-mosque"></i>
-        </div>
-        <h2>نُور الهداية</h2>
-        <p style="margin-bottom: 20px; color: #777;">مرحباً بك، سجل دخولك للبدء</p>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <i class="fa-solid fa-user"></i>
-                <input type="text" id="username" placeholder="اسم المستخدم" required>
-            </div>
-            
-            <div class="input-group">
-                <i class="fa-solid fa-lock"></i>
-                <input type="password" id="password" placeholder="كلمة المرور" required>
-            </div>
-            
-            <button type="submit" class="btn-login">دخول للموقع <a herf= "Home.html"></a></button>
-        </form>
+    <div class="live-box">
+        <p><i class="fa-solid fa-tower-broadcast"></i> بث مباشر: إذاعة القرآن الكريم من القاهرة</p>
+        <audio controls style="width: 100%;"><source src="https://stream.radiojar.com/8s5u8tp4sq8uv" type="audio/mpeg"></audio>
+    </div>
 
-        <div class="footer-text">
-            ليس لديك حساب؟ <a href = "register.html">إنشاء حساب جديد</a>
-        </div>
+    <div class="prayer-times" id="times">
+        <div class="time-card"><div>الفجر</div><strong id="fajr">--:--</strong></div>
+        <div class="time-card"><div>الظهر</div><strong id="dhuhr">--:--</strong></div>
+        <div class="time-card"><div>العصر</div><strong id="asr">--:--</strong></div>
+        <div class="time-card"><div>المغرب</div><strong id="maghrib">--:--</strong></div>
+        <div class="time-card"><div>العشاء</div><strong id="isha">--:--</strong></div>
+    </div>
+
+    <div class="menu">
+        <a href="./quran.html" class="menu-item"><i class="fa-solid fa-book-quran"></i>المصحف الشريف</a>
+        <a href="./audio.html" class="menu-item"><i class="fa-solid fa-headphones"></i>المكتبة الصوتية</a>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const user = document.getElementById('username').value;
-            
-            // إضافة حركة بسيطة قبل الانتقال
-            document.querySelector('.login-card').style.opacity = '0';
-            document.querySelector('.login-card').style.transform = 'scale(0.9)';
-            document.querySelector('.login-card').style.transition = '0.5s';
-            
-            setTimeout(() => {
-                // هذا السطر هو الذي سينقل المستخدم لصفحة الموقع الرئيسية
-                window.location.replace("./hoome.html");
-            }, 500);
-        });
+        async function getPrayers() {
+            try {
+                const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Cairo&country=Egypt&method=5');
+                const data = await res.json();
+                const t = data.data.timings;
+                document.getElementById('fajr').innerText = t.Fajr;
+                document.getElementById('dhuhr').innerText = t.Dhuhr;
+                document.getElementById('asr').innerText = t.Asr;
+                document.getElementById('maghrib').innerText = t.Maghrib;
+                document.getElementById('isha').innerText = t.Isha;
+            } catch(e) { console.log("خطأ في جلب المواقيت"); }
+        }
+        getPrayers();
     </script>
-
 </body>
 </html>
+
