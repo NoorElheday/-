@@ -3,108 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة الصوتية التلقائية - موقع نُور</title>
+    <title>المكتبة الصوتية - موقع نُور</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #2d5a27; --gold: #d4af37; --bg: #fdfbf7; }
-        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg); margin: 0; padding-bottom: 120px; }
-        .header { background: var(--primary); color: white; padding: 40px; text-align: center; border-radius: 0 0 40px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        
-        .qari-selector { margin-bottom: 30px; text-align: center; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        select { padding: 12px 25px; border-radius: 25px; border: 2px solid var(--primary); font-family: 'Tajawal'; font-size: 16px; width: 100%; max-width: 400px; outline: none; cursor: pointer; background: white; }
-
-        .surah-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
-        .surah-card { background: white; padding: 15px 20px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; border: 1px solid #eee; }
-        .surah-card:hover { transform: translateY(-3px); border-right: 5px solid var(--gold); background: #f9f9f9; }
-        .surah-info { display: flex; flex-direction: column; }
-        .surah-num { font-size: 11px; color: var(--gold); font-weight: bold; }
-        .surah-name { font-weight: bold; color: #333; font-size: 17px; }
-        
-        .play-btn { background: var(--primary); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-        .play-btn:hover { background: var(--gold); transform: scale(1.1); }
-
-        .audio-player { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px; border-top: 5px solid var(--gold); box-shadow: 0 -5px 25px rgba(0,0,0,0.1); text-align: center; z-index: 1000; }
-        #now-playing { margin-bottom: 8px; font-weight: bold; color: var(--primary); font-size: 15px; }
-        audio { width: 90%; max-width: 800px; height: 40px; }
-        
-        .loading { font-weight: bold; color: var(--gold); margin-top: 10px; display: none; }
+        :root { --primary: #1a3c15; --gold: #c5a02d; --bg: #f4f1ea; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); margin: 0; padding-bottom: 130px; }
+        .header { background: var(--primary); color: white; padding: 30px; text-align: center; }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 20px; }
+        .selector-box { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        select { width: 100%; max-width: 400px; padding: 12px; border-radius: 20px; border: 2px solid var(--primary); font-family: 'Tajawal'; outline: none; }
+        .surah-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .surah-card { background: white; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .play-btn { background: var(--primary); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 18px; }
+        .footer-player { position: fixed; bottom: 0; width: 100%; background: white; padding: 15px; border-top: 4px solid var(--gold); text-align: center; z-index: 100; }
+        #now-playing { font-weight: bold; color: var(--primary); margin-bottom: 8px; }
     </style>
 </head>
 <body>
-
-<div class="header">
-    <h1>المكتبة الصوتية الذكية</h1>
-    <p>تلاوات خاشعة لـ 15 قارئاً (تعمل تلقائياً)</p>
-</div>
-
-<div class="container">
-    <div class="qari-selector">
-        <i class="fa-solid fa-microphone-lines" style="color: var(--gold); font-size: 30px; margin-bottom: 10px; display: block;"></i>
-        <label style="display: block; margin-bottom: 15px; font-weight: bold; font-size: 18px;">اختر القارئ:</label>
-        <select id="qariSelect" onchange="loadQariData()">
-            <option value="https://server13.mp3quran.net/husr/">محمود خليل الحصري</option>
-            <option value="https://server7.mp3quran.net/basit/">عبد الباسط عبد الصمد</option>
-            <option value="https://server10.mp3quran.net/minsh/">محمد صديق المنشاوي</option>
-            <option value="https://server8.mp3quran.net/afs/">مشاري بن راشد العفاسي</option>
-            <option value="https://server12.mp3quran.net/maher/">ماهر المعيقلي</option>
-            <option value="https://server12.mp3quran.net/yasser/">ياسر الدوسري</option>
-            <option value="https://server7.mp3quran.net/shur/">سعود الشريم</option>
-            <option value="https://server11.mp3quran.net/shatri/">أبو بكر الشاطري</option>
-            <option value="https://server8.mp3quran.net/frs_a/">فارس عباد</option>
-            <option value="https://server6.mp3quran.net/qtm/">ناصر القطامي</option>
-            <option value="https://server10.mp3quran.net/ajm/">أحمد العجمي</option>
-            <option value="https://server6.mp3quran.net/idrees/">إدريس أبكر</option>
-            <option value="https://server8.mp3quran.net/bo_khtr/">صلاح بو خاطر</option>
-            <option value="https://server8.mp3quran.net/hani/">هاني الرفاعي</option>
-            <option value="https://server9.mp3quran.net/soufi/">عبد الرشيد صوفي</option>
-        </select>
-        <div id="loader" class="loading">جاري تجهيز السور...</div>
+    <div class="header"><h1>المكتبة الصوتية</h1></div>
+    <div class="container">
+        <div class="selector-box">
+            <label>اختر القارئ:</label><br><br>
+            <select id="qariSelect" onchange="loadSurahs()">
+                <option value="https://server13.mp3quran.net/husr/">محمود خليل الحصري</option>
+                <option value="https://server7.mp3quran.net/basit/MTL/">عبد الباسط عبد الصمد</option>
+                <option value="https://server10.mp3quran.net/minsh/">محمد صديق المنشاوي</option>
+                <option value="https://server8.mp3quran.net/afs/">مشاري العفاسي</option>
+                <option value="https://server12.mp3quran.net/maher/">ماهر المعيقلي</option>
+                <option value="https://server11.mp3quran.net/yasser/">ياسر الدوسري (تم التحديث)</option>
+                <option value="https://server8.mp3quran.net/frs_a/">فارس عباد</option>
+                <option value="https://server10.mp3quran.net/ajm/">أحمد العجمي</option>
+                <option value="https://server6.mp3quran.net/idrees/">إدريس أبكر</option>
+                <option value="https://server6.mp3quran.net/qtm/">ناصر القطامي</option>
+            </select>
+        </div>
+        <div class="surah-grid" id="grid"></div>
+    </div>
+    <div class="footer-player">
+        <div id="now-playing">اختر سورة للاستماع</div>
+        <audio id="mainAudio" controls style="width: 90%;"></audio>
     </div>
 
-    <div class="surah-list" id="surahGrid"></div>
-</div>
-
-<div class="audio-player">
-    <div id="now-playing">اختر سورة للبدء بالاستماع</div>
-    <audio id="mainAudio" controls autocomplete="off"></audio>
-</div>
-
-<script>
-    const surahNames = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
-
-    function loadQariData() {
-        const grid = document.getElementById('surahGrid');
-        const baseUrl = document.getElementById('qariSelect').value;
-        const qariName = document.getElementById('qariSelect').options[document.getElementById('qariSelect').selectedIndex].text;
-        
-        grid.innerHTML = '';
-        document.getElementById('loader').style.display = 'block';
-
-        surahNames.forEach((name, index) => {
-            // تنسيق رقم السورة ليكون 3 أرقام (مثلاً 001) كما تطلب السيرفرات
-            const surahNumber = (index + 1).toString().padStart(3, '0');
-            const finalUrl = `${baseUrl}${surahNumber}.mp3`;
-
-            const card = document.createElement('div');
-            card.className = 'surah-card';
-            card.innerHTML = `
-                <div class="surah-info">
-                    <span class="surah-num">رقم ${index + 1}</span>
-                    <span class="surah-name">سورة ${name}</span>
-                </div>
-                <button class="play-btn" onclick="playAudio('${finalUrl}', '${name}', '${qariName}')">
-                    <i class="fa-solid fa-play"></i>
-                </button>
-            `;
-            grid.appendChild(card);
-        });
-        
-        setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
-    }
-
-    function playAudio(url, sName, qName) {
+    <script>
+        const surahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الح
         const audio = document.getElementById('mainAudio');
         audio.src = url;
         audio.play().catch(() => {
