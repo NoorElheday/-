@@ -2,69 +2,30 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع نُور - الرئيسية</title>
+    <title>تسجيل الدخول - موقع نُور</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #2d5a27; --gold: #d4af37; --bg: #fdfbf7; }
-        body { margin: 0; font-family: 'Tajawal', sans-serif; background: var(--bg); }
-        .header { background: var(--primary); color: white; padding: 40px; text-align: center; border-radius: 0 0 40px 40px; }
-        .header h1 { font-family: 'Amiri', serif; margin: 0; }
-        
-        /* كود البث المباشر */
-        .live-box { max-width: 600px; margin: 20px auto; background: white; padding: 15px; border-radius: 20px; border: 2px solid var(--gold); text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .live-box i { color: red; animation: blink 1s infinite; margin-left: 10px; }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .prayer-times { max-width: 800px; margin: 20px auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 10px; padding: 10px; }
-        .time-card { background: white; padding: 15px; border-radius: 15px; width: 100px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-bottom: 3px solid var(--gold); }
-
-        .menu { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px; max-width: 800px; margin: auto; }
-        .menu-item { background: white; padding: 30px; border-radius: 20px; text-align: center; text-decoration: none; color: var(--primary); font-weight: bold; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .menu-item:hover { background: var(--primary); color: white; transform: translateY(-5px); }
-        .menu-item i { font-size: 30px; display: block; margin-bottom: 10px; color: var(--gold); }
+        :root { --primary: #2d5a27; --gold: #d4af37; }
+        body { margin: 0; font-family: 'Tajawal', sans-serif; height: 100vh; display: flex; align-items: center; justify-content: center;
+               background: linear-gradient(-45deg, #2d5a27, #1e3d1a, #4a7c44, #2d5a27); background-size: 400% 400%; animation: gradient 15s ease infinite; }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .card { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); width: 90%; max-width: 400px; text-align: center; }
+        h2 { font-family: 'Amiri', serif; color: var(--primary); font-size: 32px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 25px; border: 1px solid #ddd; outline: none; box-sizing: border-box; text-align: center; }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 25px; background: var(--primary); color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: var(--gold); }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>نُور الهداية</h1>
-        <p>زاد المسلم اليومي</p>
+    <div class="card">
+        <h2>نُور الهداية</h2>
+        <p>مرحباً بك في موقعك الإسلامي</p>
+        <form onsubmit="event.preventDefault(); window.location.href='./index.html';">
+            <input type="text" placeholder="اسم المستخدم" required>
+            <input type="password" placeholder="كلمة المرور" required>
+            <button type="submit" class="btn">دخول للموقع</button>
+        </form>
     </div>
-
-    <div class="live-box">
-        <p><i class="fa-solid fa-tower-broadcast"></i> بث مباشر: إذاعة القرآن الكريم من القاهرة</p>
-        <audio controls style="width: 100%;"><source src="https://stream.radiojar.com/8s5u8tp4sq8uv" type="audio/mpeg"></audio>
-    </div>
-
-    <div class="prayer-times" id="times">
-        <div class="time-card"><div>الفجر</div><strong id="fajr">--:--</strong></div>
-        <div class="time-card"><div>الظهر</div><strong id="dhuhr">--:--</strong></div>
-        <div class="time-card"><div>العصر</div><strong id="asr">--:--</strong></div>
-        <div class="time-card"><div>المغرب</div><strong id="maghrib">--:--</strong></div>
-        <div class="time-card"><div>العشاء</div><strong id="isha">--:--</strong></div>
-    </div>
-
-    <div class="menu">
-        <a href="./quran.html" class="menu-item"><i class="fa-solid fa-book-quran"></i>المصحف الشريف</a>
-        <a href="./audio.html" class="menu-item"><i class="fa-solid fa-headphones"></i>المكتبة الصوتية</a>
-    </div>
-
-    <script>
-        async function getPrayers() {
-            try {
-                const res = await fetch('https://api.aladhan.com/v1/timingsByCity?city=Cairo&country=Egypt&method=5');
-                const data = await res.json();
-                const t = data.data.timings;
-                document.getElementById('fajr').innerText = t.Fajr;
-                document.getElementById('dhuhr').innerText = t.Dhuhr;
-                document.getElementById('asr').innerText = t.Asr;
-                document.getElementById('maghrib').innerText = t.Maghrib;
-                document.getElementById('isha').innerText = t.Isha;
-            } catch(e) { console.log("خطأ في جلب المواقيت"); }
-        }
-        getPrayers();
-    </script>
 </body>
 </html>
-
