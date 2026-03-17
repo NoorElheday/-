@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - موقع نُور</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2d5a27;
+            --gold: #d4af37;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Tajawal', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* خلفية بتدرج لوني متحرك وهادئ */
+            background: linear-gradient(-45deg, #2d5a27, #1e3d1a, #4a7c44, #2d5a27);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            animation: fadeIn 1.2s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            box-shadow: 0 10px 20px rgba(45, 90, 39, 0.3);
+        }
+
+        h2 {
+            font-family: 'Amiri', serif;
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 45px 14px 15px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            outline: none;
+            font-family: 'Tajawal';
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: 0.3s;
+            background: #f9f9f9;
+        }
+
+        input:focus {
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 30px;
+            background: var(--primary);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-login:hover {
+            background: #1e3d1a;
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .footer-text a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="icon-box">
+            <i class="fa-solid fa-mosque"></i>
+        </div>
+        <h2>نُور الهداية</h2>
+        <p style="margin-bottom: 20px; color: #777;">مرحباً بك، سجل دخولك للبدء</p>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="username" placeholder="اسم المستخدم" required>
+            </div>
+            
+            <div class="input-group">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+            </div>
+            
+            <button type="submit" class="btn-login">دخول للموقع <a herf= "Home.html"></a></button>
+        </form>
+
+        <div class="footer-text">
+            ليس لديك حساب؟ <a href = "register.html">إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            
+            // إضافة حركة بسيطة قبل الانتقال
+            document.querySelector('.login-card').style.opacity = '0';
+            document.querySelector('.login-card').style.transform = 'scale(0.9)';
+            document.querySelector('.login-card').style.transition = '0.5s';
+            
+            setTimeout(() => {
+                // هذا السطر هو الذي سينقل المستخدم لصفحة الموقع الرئيسية
+                window.location.replace("./hoome.html");
+            }, 500);
+        });
+    </script>
+
+</body>
+</html>
